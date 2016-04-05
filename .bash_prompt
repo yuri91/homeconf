@@ -53,11 +53,13 @@ else
     RESET="\033[m"
 fi
 
-# to customize hostname color put a variable $HOSTCOLOR in there
+# to customize colors put variables in ~/.bash_prompt_custom
 # example: HOSTCOLOR="$BLUE"  # '"' required
 HOSTCOLOR=$BLUE
-if [ -f ~/.bash_prompt_hostcolor ]; then
-	source ~/.bash_prompt_hostcolor
+USERCOLOR=$GREEN
+PROMPT="$"
+if [ -f ~/.bash_prompt_custom ]; then
+	source ~/.bash_prompt_custom
 fi
 
-PS1="\[$BASE01\]\t\[$HOSTCOLOR\][\h]\[$GREEN\][\u] \[$CYAN\]\w\n\[$GREEN\]\$\[$RESET\]"
+PS1="\[$BASE01\]\t\[$HOSTCOLOR\][\h]\[$USERCOLOR\][\u] \[$CYAN\]\w\n\[$USERCOLOR\]$PROMPT\[$RESET\]"
