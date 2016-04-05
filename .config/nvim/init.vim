@@ -49,6 +49,8 @@ let g:ctrlp_working_path_mode = 'ra'
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " toggle
 map <C-n> :NERDTreeToggle<CR>
+" initial width
+:let g:NERDTreeWinSize=20
 
 "colorscheme
 set background=dark
