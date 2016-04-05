@@ -53,4 +53,11 @@ else
     RESET="\033[m"
 fi
 
-PS1="\[$BASE01\]\t\[$BLUE\][\h]\[$GREEN\][\u] \[$CYAN\]\w\n\[$GREEN\]\$\[$RESET\]"
+# to customize hostname color put a variable $HOSTCOLOR in there
+# example: HOSTCOLOR="$BLUE"  # '"' required
+HOSTCOLOR=$BLUE
+if [ -f ~/.bash_prompt_hostcolor ]; then
+	source ~/.bash_prompt_hostcolor
+fi
+
+PS1="\[$BASE01\]\t\[$HOSTCOLOR\][\h]\[$GREEN\][\u] \[$CYAN\]\w\n\[$GREEN\]\$\[$RESET\]"
