@@ -2,12 +2,20 @@
 
 import os
 import argparse
+import urllib.request
+from subprocess import call
 
+# options
 parser = argparse.ArgumentParser(description='install symlinks in home directory')
 parser.add_argument('-f, --force',
 		    dest='force',
 		    action='store_true',
 		    help='delete already existing files')
+
+parser.add_argument('--vim-plug',
+		    dest='vim_plug',
+		    action='store_true',
+		    help='bootstrap vim-plug')
 
 args = parser.parse_args()
 
@@ -21,6 +29,8 @@ file_blacklist = set([
         'README.md',
 ])
 
+# move files
+print('making symlinks...')
 root = '.'
 target = os.path.expanduser('~')
 for dirname, subdirs, files in os.walk(root, topdown=True):
@@ -42,3 +52,21 @@ for dirname, subdirs, files in os.walk(root, topdown=True):
 				print(from_f," --> ", to_f," (overwriting as of --force)")
 			else:
 				print(to_f," already exists, skipping. (try --force?)")
+
+# other stuff
+
+if args.vim_plug:
+	# install vim-plug
+	url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+	vim_plug_path = os.path.expanduser('~/.config/nvim/autoload/plug.vim')
+	os.makedirs(os.path.dirname(vim_plug_path))
+	print('downloading vim-plug...')
+	with urllib.request.urlopen(url) as response, open(vim_plug_path, 'wb') as out_file:
+	    data = response.read() # a `bytes` object
+	    out_file.write(data)
+
+	# install plugins
+	print('installing plugins...')
+	subprocess.call("vim +PlugInstall +qall",shell=True)
+
+print('done!')
