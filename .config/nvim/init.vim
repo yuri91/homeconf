@@ -6,7 +6,7 @@ Plug 'dhruvasagar/vim-table-mode'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
-Plug 'altercation/vim-colors-solarized'
+Plug 'frankier/neovim-colors-solarized-truecolor-only'
 Plug 'Shougo/deoplete.nvim'
 Plug 'lambdatoast/elm.vim'
 Plug 'bronson/vim-trailing-whitespace'
@@ -53,6 +53,7 @@ map <C-n> :NERDTreeToggle<CR>
 :let g:NERDTreeWinSize=20
 
 "colorscheme
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set background=dark
 colorscheme solarized
 
