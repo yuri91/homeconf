@@ -16,6 +16,10 @@ parser.add_argument('--vim-plug',
 		    dest='vim_plug',
 		    action='store_true',
 		    help='bootstrap vim-plug')
+parser.add_argument('--include-vim',
+		    dest='vim',
+		    action='store_true',
+		    help='copy nvim conf to vim locations too')
 
 args = parser.parse_args()
 
@@ -56,17 +60,48 @@ for dirname, subdirs, files in os.walk(root, topdown=True):
 # other stuff
 
 if args.vim_plug:
+	print('configure  neovim...')
 	# install vim-plug
 	url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-	vim_plug_path = os.path.expanduser('~/.config/nvim/autoload/plug.vim')
-	os.makedirs(os.path.dirname(vim_plug_path))
+	vim_plug_file = os.path.expanduser('~/.config/nvim/autoload/plug.vim')
+	vim_plug_dir = os.path.dirname(vim_plug_file)
+	if not os.path.exists(vim_plug_dir):
+		os.makedirs(vim_plug_dir)
 	print('downloading vim-plug...')
-	with urllib.request.urlopen(url) as response, open(vim_plug_path, 'wb') as out_file:
+	with urllib.request.urlopen(url) as response, open(vim_plug_file, 'wb') as out_file:
 	    data = response.read() # a `bytes` object
 	    out_file.write(data)
 
 	# install plugins
 	print('installing plugins...')
-	subprocess.call("vim +PlugInstall +qall",shell=True)
+	call("vim +PlugInstall +qall",shell=True)
 
+if args.vim:
+	print('configure  vim...')
+	# install vim-plug
+	url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+	nvim_rc = os.path.expanduser('~/.config/nvim/init.vim')
+	vim_rc = os.path.expanduser('~/.vimrc')
+	try:
+		os.symlink(nvim_rc,vim_rc)
+		print(nvim_rc," --> ", vim_rc)
+	except FileExistsError:
+		if args.force:
+			os.remove(vim_rc)
+			os.symlink(nvim_rc,vim_rc)
+			print(nvim_rc," --> ",vim_rc," (overwriting as of --force)")
+		else:
+			print(vim_rc," already exists, skipping. (try --force?)")
+	vim_plug_file = os.path.expanduser ('~/.vim/autoload/plug.vim')
+	vim_plug_dir = os.path.dirname(vim_plug_file)
+	if not os.path.exists(vim_plug_dir):
+		os.makedirs(vim_plug_dir)
+	print('downloading vim-plug...')
+	with urllib.request.urlopen(url) as response, open(vim_plug_file, 'wb') as out_file:
+	    data = response.read() # a `bytes` object
+	    out_file.write(data)
+
+	# install plugins
+	print('installing plugins...')
+	call("vim +PlugInstall +qall",shell=True)
 print('done!')
