@@ -72,5 +72,8 @@ map <space> <leader>
 " close buffer
 nnoremap <leader>q :bd<CR>
 
-"language-specific (google style)
+"language-specific: C++ (google style)
 autocmd FileType cpp setlocal shiftwidth=2 tabstop=2 expandtab
+
+"language-specific: python (tab == 4 spaces)
+autocmd FileType python setlocal shiftwidth=4 tabstop=4 expandtab

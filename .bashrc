@@ -27,6 +27,9 @@ alias v='nvim'
 export EDITOR='nvim'
 export SYSTEMD_EDITOR='nvim'
 
+#term
+export TERM='st'
+
 #personal aliases
 alias gping='ping www.google.com'
 alias update='yaourt -Syu --aur'
