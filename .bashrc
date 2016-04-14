@@ -27,6 +27,13 @@ alias v='nvim'
 export EDITOR='nvim'
 export SYSTEMD_EDITOR='nvim'
 
+#dates in history
+export HISTTIMEFORMAT="%d/%m/%y %T "
+#bigger history
+export HISTSIZE=10000
+export HISTFILESIZE=10000
+
+
 #term
 export TERM='st'
 
