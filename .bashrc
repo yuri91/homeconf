@@ -35,7 +35,7 @@ export HISTFILESIZE=10000
 
 
 #term
-export TERM='st'
+export TERM='xterm-256color'
 
 #personal aliases
 alias gping='ping www.google.com'
