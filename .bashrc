@@ -52,3 +52,6 @@ export PATH="$PATH:$GOPATH/bin"
 #cabal
 export PATH="$PATH:/home/yuri/.cabal/bin"
 
+#haste pastebin service on euler
+export HASTE_SERVER="http://10.2.85.245:7777"
+
